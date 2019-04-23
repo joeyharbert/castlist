@@ -21,7 +21,7 @@
   export default {
     data: function() {
       return {
-        message: "Welcome to Castlist!",
+        message: "Welcome to Castlist! Audition Index",
         auditions: []
       };
     },

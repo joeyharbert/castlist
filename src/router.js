@@ -1,6 +1,11 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from './views/Home.vue';
+import AuditionsShow from './views/AuditionsShow.vue';
+import AuditionsIndex from './views/AuditionsIndex.vue';
+import Signup from "./views/Signup.vue";
+import Login from "./views/Login.vue";
+import Logout from "./views/Logout.vue";
 
 Vue.use(Router)
 
@@ -12,6 +17,31 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/auditions/',
+      name: 'auditions-index',
+      component: AuditionsIndex
+    },
+    {
+      path: '/auditions/:id',
+      name: 'auditions-show',
+      component: AuditionsShow
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: Logout
     },
     {
       path: '/about',
