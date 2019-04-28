@@ -5,8 +5,10 @@ import axios from "axios"
 import Datetime from 'vue-datetime'
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css'
+import VueSwing from 'vue-swing'
 
 Vue.use(Datetime)
+Vue.component('vue-swing', VueSwing)
 
 axios.defaults.baseURL = 
   process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/";

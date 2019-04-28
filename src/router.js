@@ -5,6 +5,7 @@ import AuditionsShow from './views/AuditionsShow.vue';
 import AuditionsIndex from './views/AuditionsIndex.vue';
 import AuditionsNew from './views/AuditionsNew.vue';
 import AuditionsUpdate from './views/AuditionsUpdate.vue';
+import AuditionsLive from './views/AuditionsLive.vue';
 import Signup from "./views/Signup.vue";
 import Login from "./views/Login.vue";
 import Logout from "./views/Logout.vue";
@@ -39,6 +40,11 @@ export default new Router({
       path: '/auditions/:id/edit',
       name: 'auditions-update',
       component: AuditionsUpdate
+    },
+    {
+      path: '/auditions/:id/live',
+      name: 'auditions-live',
+      component: AuditionsLive
     },
     {
       path: '/signup',

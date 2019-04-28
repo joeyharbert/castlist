@@ -29,6 +29,7 @@
 
       <div v-if="audition.directors[0].phone">
         <button v-on:click="destroyAudition(audition)">Delete Audition</button>
+        <button v-on:click="goLive(audition)">Go to Live View</button>
       </div>
     </div>
   </div>
@@ -49,8 +50,7 @@ export default {
     axios.get("/api/auditions/" + this.$route.params.id).then(response => {
       this.audition = response.data;
       this.loading = false;
-    })
-    console.log(this);
+    });
   },
   methods: {
     destroyAudition: function(audition) {
@@ -62,6 +62,17 @@ export default {
            .catch(error => {
               this.errors = error.response.data.errors;
             });
+    },
+    goLive: function(audition) {
+      var params = {active: true};
+      axios.patch("/api/auditions/" + audition.id, params)
+      .then(response => {
+        console.log(response.data);
+        })
+      .catch(error => {
+        this.errors = error.response.data.errors;
+      });
+      this.$router.push("/auditions/" + audition.id + "/live");
     }
   }
 };
