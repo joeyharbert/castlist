@@ -36,8 +36,8 @@
 
          <nav class="pagination add-bottom">
           <a class="page-numbers prev" v-on:click="sort(currentTimeSlot, 1)">Starred</a>
-          <a href="#" class="page-numbers next" v-on:click="sort(currentTimeSlot, 'none')">X</a>
-          <a href="#" class="page-numbers next" v-on:click="sort(currentTimeSlot, 0)">Callback</a>
+          <a class="page-numbers next" v-on:click="sort(currentTimeSlot, 'none')">X</a>
+          <a class="page-numbers next" v-on:click="sort(currentTimeSlot, 0)">Callback</a>
           <a class="page-numbers next" v-on:click="next()">Next</a>
          </nav>
        </div>
