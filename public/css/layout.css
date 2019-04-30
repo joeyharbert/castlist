@@ -602,6 +602,11 @@ ul#nav ul li a {
    margin-bottom: 0;
    margin-left: 7%;
 }
+#req{
+   display: block;
+   font-family: notosans-bold, sans-serif;
+   color: #313131;
+}
 
 /* on hover */
 .portfolio-item:hover .item-wrap { background-color: #3A3434; }

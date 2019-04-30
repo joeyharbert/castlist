@@ -18,15 +18,15 @@
                   <form name="contactForm" id="contactForm" method="post" action="" v-on:submit.prevent="submit()">
                 <fieldset>
 
-                        <div class="half">
-                     <label for="contactName">Email</span></label>
+                        <div class="half"><span>
+                     <label for="contactName">Email</label>
                      <input name="contactName" type="email" class="form-control" v-model="email" size="35" value="" />
-                        </div>
+                        </span></div>
 
-                        <div class="half pull-right">
+                        <div class="half pull-right"><span>
                      <label for="contactEmail">Password</label>
                      <input name="contactEmail" type="password" class="form-control" v-model="password" size="35" value="" />
-                        </div>
+                        </span></div>
                         <input type="submit" class="btn btn-primary" value="Submit">
                 </fieldset>
               </form> <!-- Form End -->

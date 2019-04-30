@@ -23,7 +23,7 @@
                           <li><router-link to="/auditions/new">Auditions New</router-link></li>
                        </ul>
                     </li>
-                    <li><span>User</span>
+                    <li><span><router-link to="/login">User</router-link></span>
                        <ul>
                           <li><router-link to="/login">Login</router-link></li>
                           <li><router-link to="/logout">Logout</router-link></li>

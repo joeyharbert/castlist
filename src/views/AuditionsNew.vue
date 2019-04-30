@@ -1,5 +1,18 @@
 <template>
   <div class="content-outer" v-if="!loading">
+    <div id="page-title">
+
+        <div class="row">
+
+           <div class="ten columns centered text-center">
+              <h1>Create<span>.</span></h1>
+
+              <p>A bit of the fire that lit up the stars.</p>
+           </div>
+
+        </div>
+
+     </div>
 
       <div id="page-content" class="row page">
 

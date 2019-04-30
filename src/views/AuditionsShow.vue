@@ -27,7 +27,9 @@
                   <h1>{{ audition.show.name }}</h1>
 
                   <div class="entry-description">
-
+                      <span id="req">Requirements:</span>
+                      {{audition.requirements}}
+                      <hr>
                      Directing team:
                     <div v-for="director in audition.directors"> 
                       <span>{{ director.first_name }} {{ director.last_name }}</span>
@@ -35,7 +37,7 @@
                         <div><i>Phone number: {{ director.phone }}</i></div>
                         <div><i>Email: {{ director.email }}</i></div>
                       </div>
-                      <div><span v-if="currentDirector !== director"><a v-on:click="toggleDirectorInfo(director)">More Info</a></span></div>
+                      <div><span v-if="(currentDirector !== director) && isDirector"><a v-on:click="toggleDirectorInfo(director)">More Info</a></span></div>
                     </div>
 
                   </div>
@@ -44,6 +46,7 @@
                    <li><span>Date: </span>{{ audition.start_time.substring(0, 10)}}</li>
                    <li><span>Start Time: </span>{{ audition.start_time.substring(10, 16)}}</li>
                    <li><span>End Time: </span>{{ audition.end_time.substring(10, 16) }}</li>
+                   <li><a v-on:click="editAudition(audition)" v-if="isDirector">Edit Audition</a></li>
                    <li><a v-on:click="destroyAudition(audition)" v-if="isDirector">Delete Audition</a></li>
                   </ul>
 
@@ -147,6 +150,9 @@ export default {
         this.errors = error.response.data.errors;
       });
       this.$router.push("/auditions/" + audition.id + "/live");
+    },
+    editAudition: function(audition) {
+      this.$router.push("/auditions/" + audition.id + "/edit");
     },
     signUp: function(timeSlot) {
       axios.patch("/api/time_slots/" + timeSlot.id)

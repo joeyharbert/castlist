@@ -38,37 +38,37 @@
                   <form name="contactForm" id="contactForm" method="post" action="" v-on:submit.prevent="submit()">
                 <fieldset>
 
-                        <div class="half">
+                        <div class="half"><span>
                          <label for="firstName">First Name <span class="required">*</span></label>
                          <input name="firstName" type="text" id="contactName" size="35" value="" v-model="firstName"/>
-                        </div>
+                        </span></div>
 
-                        <div class="half pull-right">
+                        <div class="half pull-right"><span>
                          <label for="lastName">Last Name <span class="required">*</span></label>
                          <input name="lastName" type="text" id="contactEmail" size="35" value="" v-model="lastName"/>
-                        </div>
+                        </span></div>
 
-                        <div class="half">
+                        <div class="half"><span>
                          <label for="phone">Phone Number <span class="required">*</span></label>
                          <input name="phone" type="text" id="contactName" size="35" value="" v-model="phone"/>
-                        </div>
+                        </span></div>
 
-                        <div class="half pull-right">
+                        <div class="half pull-right"><span>
                          <label for="contactEmail">Email <span class="required">*</span></label>
                          <input name="contactEmail" type="text" id="contactEmail" size="35" value="" v-model="email"/>
-                        </div>
+                        </span></div>
 
-                        <div class="half">
+                        <div class="half"><span>
                          <label for="password">Password <span class="required">*</span></label>
                          <input name="password" type="password" id="contactName" size="35" value="" v-model="password"/>
-                        </div>
+                        </span></div>
 
-                        <div class="half pull-right">
+                        <div class="half pull-right"><span>
                          <label for="passwordConfirmation">Re-type Password: <span class="required">*</span></label>
                          <input name="passwordConfirmation" type="password" id="contactEmail" size="35" value="" v-model="passwordConfirmation"/>
-                        </div>
+                        </span></div>
 
-                        <div class="half">
+                        <div class="half"><span>
                           <div class="form-group">
                             <label for="user-type">User type </label>
                               <select name="user-type" v-model="type">
@@ -77,9 +77,9 @@
                                 <option>Proctor</option>
                               </select>
                           </div>
-                        </div>
+                        </span></div>
 
-                        <div class="half pull-right">
+                        <div class="half pull-right"><span>
                           <div class="form-group">
                             <label for="union-status">Union Status </label>
                               <select name="union-status" v-model="union">
@@ -88,14 +88,14 @@
                                 <option value="2">Equity</option>
                               </select>
                           </div>
-                        </div>
+                        </span></div>
 
-                        <div>
+                        <div><span>
                            <button class="submit">Submit</button>
                            <span id="image-loader">
                               <img src="images/loader.gif" alt="" />
                            </span>
-                        </div>
+                        </span></div>
 
                 </fieldset>
               </form> <!-- Form End -->
