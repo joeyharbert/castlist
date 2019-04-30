@@ -35,7 +35,7 @@
             </div>
 
             <div class="ten columns offset-2 post-content">
-               <p>{{ audition.requirements }}
+               <p>{{ audition.show.name }}
                <a class="more-link" :href="'/auditions/' + audition.id">Read More<i class="fa fa-arrow-circle-o-right"></i></a></p>
             </div>
 

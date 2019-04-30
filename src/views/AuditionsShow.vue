@@ -60,31 +60,27 @@
 
                     <div class="entry-header">
 
-                       <div class="ten columns entry-title pull-right">
+                       <div class="nine columns entry-title pull-right">
                           <h3 v-if="!timeSlot.actor">Open</h3>
                           <h3 v-if="timeSlot.actor">Filled by: {{ timeSlot.actor.first_name }} {{ timeSlot.actor.last_name }}</h3>
                        </div>
 
-                       <div class="two columns post-meta end">
-                          <p>
+                       <div class="three columns post-meta end">
                           <time datetime="2014-01-31" class="post-date" pubdate="">{{ timeSlot.start_time.substring(0, 10)}}</time>
                           <span class="dauthor">Start: {{ timeSlot.start_time.substring(10, 16) }}</span>
                           <span class="dauthor">End: {{ timeSlot.end_time.substring(10, 16) }}</span>
-                          </p>
                        </div>
 
                     </div>
 
-                    <div class="ten columns offset-2 post-content">
-                       <p>
+                    <div class="nine columns pull-right post-content">
                         <div class="actor-info" v-if="timeSlot.actor && timeSlot.actor === currentActor">
-                          <p>Phone: {{ timeSlot.actor.phone }}</p>
-                          <p>Email: {{ timeSlot.actor.email }}</p>
-                          <p>Union Status: {{ timeSlot.actor.union_status }}</p>
+                          <div>Phone: {{ timeSlot.actor.phone }}</div>
+                          <div>Email: {{ timeSlot.actor.email }}</div>
+                          <div>Union Status: {{ timeSlot.actor.union_status }}</div>
                         </div>
-                        <a v-if="!timeSlot.actor" class="more-link" v-on:click="signUp(timeSlot)">Sign Up!<i class="fa fa-arrow-circle-o-right"></i></a>
-                        <a v-if="timeSlot.actor && isDirector" class="more-link" v-on:click="toggleActorInfo(timeSlot.actor)">More Info<i class="fa fa-arrow-circle-o-right"></i></a>
-                       </p>
+                        <a v-if="!timeSlot.actor && !isDirector" class="more-link pull-right" v-on:click="signUp(timeSlot)">Sign Up!<i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a v-if="timeSlot.actor && isDirector" class="more-link pull-right" v-on:click="toggleActorInfo(timeSlot.actor)">More Info<i class="fa fa-arrow-circle-o-right"></i></a>
                     </div>
 
                  </article> <!-- Entry End -->
