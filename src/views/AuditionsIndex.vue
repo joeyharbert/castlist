@@ -1,14 +1,20 @@
 <template>
   <div class="home">
-    <h1>{{ message }}</h1>
-
-    <section id="journal">
+    <div id="page-title">
 
       <div class="row">
-         <div class="twelve columns align-center">
-            <h1>Current Audition Postings.</h1>
+
+         <div class="ten columns centered text-center">
+            <h1>{{ message }}<span>.</span></h1>
+
+            <p>Current Audition Postings.</p>
          </div>
+
       </div>
+
+   </div>
+
+    <section id="journal">
 
       <div class="blog-entries">
 
@@ -56,7 +62,7 @@
   export default {
     data: function() {
       return {
-        message: "Welcome to Castlist! Audition Index",
+        message: "Welcome to Castlist",
         auditions: []
       };
     },
