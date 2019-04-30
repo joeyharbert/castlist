@@ -6,7 +6,7 @@
 
       <div class="row">
          <div class="twelve columns align-center">
-            <h1>Our latest posts and rants.</h1>
+            <h1>Current Audition Postings.</h1>
          </div>
       </div>
 

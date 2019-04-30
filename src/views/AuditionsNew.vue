@@ -1,32 +1,92 @@
 <template>
-  <div class="root" v-if="!loading">
-    <h2>Make New Audition Day:</h2>
-    <div v-if="errors.length > 0">
-      Please fix the following errors:
-      <ul>
-          <li class="text-danger" v-for="error in errors">{{ error }}</li>
-      </ul>
-    </div>
-    <form v-on:submit.prevent="makeNewAudition()">
-      <p>Name:<input type="text" v-model="newName"></p>
-      <p>Requirements:<input type="text" v-model="newRequirements"></p>
-      <p>Time Slot Length:<input type="text" v-model="newTimeSlotLength"></p>
-      <div class="form-group">
-          <label for="company">Company: </label>
-            <select name="company" v-model="newCompany">
-              <option v-for="company in companies" :value="company.id">{{ company.name }}</option>
-            </select>
-      </div>
-      <div class="form-group">
-          <label for="show">Show: </label>
-            <select name="show" v-model="newShow">
-              <option v-for="show in shows" :value="show.id">{{ show.name }}</option>
-            </select>
-      </div>
-      <p>Start Time:<datetime type="datetime" v-model="newStartTime"></datetime :auto="true"></p>
-      <p>End Time:<datetime type="datetime" v-model="newEndTime"></datetime :auto="true"></p>
-      <input type="submit" value="Create">
-    </form>
+  <div class="content-outer" v-if="!loading">
+
+      <div id="page-content" class="row page">
+
+         <div id="primary" class="eight columns">
+
+            <section>
+
+              <h1>Create an Audition Day</h1>
+
+              <p class="lead">Use this space to create your audition.</p>
+
+              <p>Make sure you fill out all the information. Break Legs!</p>
+
+              <div id="contact-form">
+
+                  <!-- form -->
+                  <form name="contactForm" id="contactForm" method="post" action="" v-on:submit.prevent="makeNewAudition()">
+                <fieldset>
+
+                        <div>
+                         <label for="contactSubject">Audition Name</label>
+                         <input name="contactSubject" type="text" id="contactSubject" size="35" value="" v-model="newName"/>
+                        </div>
+
+                        <div>
+                           <label for="contactName"> Time Slot Length <span class="required">*</span></label>
+                           <input name="contactName" type="text" id="contactName" size="35" value="" v-model="newTimeSlotLength"/>
+                        </div>
+
+                        <div class="half">
+                          <label for="company"> Company <span class="required">*</span></label>
+                          <select name="company" v-model="newCompany">
+                            <option v-for="company in companies" :value="company.id">{{ company.name }}</option>
+                          </select>
+                        </div>
+
+                        <div class="half pull-right">
+                          <label for="show"> Show <span class="required">*</span></label>
+                            <select name="show" v-model="newShow">
+                              <option v-for="show in shows" :value="show.id">{{ show.name }}</option>
+                            </select>
+                        </div>
+
+                        <div class="half">
+                          <label for="start"> Start Time: <span class="required">*</span></label>
+                          <datetime name="start" type="datetime" v-model="newStartTime"></datetime :auto="true">
+                        </div>
+
+                        <div class="half pull-right">
+                          <label for="end"> End Time: <span class="required">*</span></label>
+                          <datetime name="end" type="datetime" v-model="newEndTime"></datetime :auto="true">
+                        </div>
+
+                        <div>
+                           <label  for="contactMessage">Requirements <span class="required">*</span></label>
+                           <textarea name="contactMessage"  id="contactMessage" rows="15" cols="50" v-model="newRequirements"></textarea>
+                        </div>
+
+                        <div>
+                           <button class="submit">Create Audition</button>
+                           <span id="image-loader">
+                              <img src="images/loader.gif" alt="" />
+                           </span>
+                        </div>
+
+                </fieldset>
+              </form> <!-- Form End -->
+
+                  <!-- contact-warning -->
+                  <div v-if="errors.length > 0" id="message-warning">
+                    Please fix the following errors:
+                    <ul>
+                        <li class="text-danger" v-for="error in errors">{{ error }}</li>
+                    </ul>
+                  </div>
+                  <!-- contact-success -->
+              <div id="message-success">
+                     <i class="icon-ok"></i>Your message was sent, thank you!<br />
+              </div>
+
+               </div>
+
+            </section> <!-- section end -->
+
+         </div> 
+       </div>
+
   </div>
 </template>
 

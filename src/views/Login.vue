@@ -1,22 +1,49 @@
 <template>
   <div class="login">
-    <div class="container">
-      <form v-on:submit.prevent="submit()">
-        <h1>Login</h1>
-        <ul>
-          <li class="text-danger" v-for="error in errors">{{ error }}</li>
-        </ul>
-        <div class="form-group">
-          <label>Email:</label>
-          <input type="email" class="form-control" v-model="email">
-        </div>
-        <div class="form-group">
-          <label>Password:</label>
-          <input type="password" class="form-control" v-model="password">
-        </div>
-        <input type="submit" class="btn btn-primary" value="Submit">
-      </form>
-    </div>
+
+
+    <div class="content-outer">
+
+      <div id="page-content" class="row page">
+
+         <div id="primary" class="eight columns">
+
+            <section>
+
+              <h1>Login</h1>
+
+              <div id="contact-form">
+
+                  <!-- form -->
+                  <form name="contactForm" id="contactForm" method="post" action="" v-on:submit.prevent="submit()">
+                <fieldset>
+
+                        <div class="half">
+                     <label for="contactName">Email</span></label>
+                     <input name="contactName" type="email" class="form-control" v-model="email" size="35" value="" />
+                        </div>
+
+                        <div class="half pull-right">
+                     <label for="contactEmail">Password</label>
+                     <input name="contactEmail" type="password" class="form-control" v-model="password" size="35" value="" />
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                </fieldset>
+              </form> <!-- Form End -->
+
+                  <!-- contact-warning -->
+                  <div id="message-warning"></div>
+                  <!-- contact-success -->
+              <div id="message-success">
+                     <i class="icon-ok"></i>Your message was sent, thank you!<br />
+              </div>
+
+               </div>
+
+            </section> <!-- section end -->
+          </div>
+         </div>
+       </div>
   </div>
 </template>
 
