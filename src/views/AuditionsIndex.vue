@@ -2,13 +2,48 @@
   <div class="home">
     <h1>{{ message }}</h1>
 
-    <div class="containter" v-for="audition in auditions">
-      <h3>{{ audition.name }}</h3>
-      <p>Show: {{ audition.show.name }}</p>
-      <p>Company: {{ audition.company.name }}</p>
-      <p>Audition Date: {{ audition.time_slots[0].start_time.substring(0, 10)}}</p>
-      <p><a :href="'/auditions/' + audition.id">More Info</a></p>
-    </div>
+    <section id="journal">
+
+      <div class="row">
+         <div class="twelve columns align-center">
+            <h1>Our latest posts and rants.</h1>
+         </div>
+      </div>
+
+      <div class="blog-entries">
+
+         <!-- Entry -->
+         <article class="row entry" v-for="audition in auditions">
+
+            <div class="entry-header">
+
+               <div class="permalink">
+                  <a :href="'/auditions/' + audition.id"><i class="fa fa-link"></i></a>
+               </div>
+
+               <div class="ten columns entry-title pull-right">
+                  <h3><a :href="'/auditions/' + audition.id">{{ audition.name }}</a></h3>
+               </div>
+
+               <div class="two columns post-meta end">
+                  <p>
+                  <time datetime="2014-01-31" class="post-date" pubdate="">{{ audition.start_time.substring(0, 10)}}</time>
+                  <span class="dauthor">{{ audition.company.name }}</span>
+                  </p>
+               </div>
+
+            </div>
+
+            <div class="ten columns offset-2 post-content">
+               <p>{{ audition.requirements }}
+               <a class="more-link" :href="'/auditions/' + audition.id">Read More<i class="fa fa-arrow-circle-o-right"></i></a></p>
+            </div>
+
+         </article> <!-- Entry End -->
+
+      </div> <!-- Entries End -->
+
+   </section> <!-- Journal Section End-->
   </div>
 </template>
 
