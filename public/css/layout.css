@@ -1075,9 +1075,13 @@ ol.commentlist {
 
 /* contact form */
 #contact-form form { margin-bottom: 30px; }
-#contact-form div {
+#contact-form span{
    float: left;
    width: 100%;
+}
+.vdatetime-popup {
+   float: clear;
+   width: 50%;
 }
 #contact-form .half { width: 47%; }
 #contact-form label {

@@ -1,33 +1,91 @@
 <template>
-  <div class="root" v-if="!loading">
-    <h2>Editing {{ audition.name }}:</h2>
-    <div v-if="errors.length > 0">
-      Please fix the following errors:
-      <ul>
-          <li class="text-danger" v-for="error in errors">{{ error }}</li>
-      </ul>
-    </div>
-    <form v-on:submit.prevent="updateAudition(audition)">
-      <p>Name:<input type="text" v-model="audition.name"></p>
-      <p>Requirements:<input type="text" v-model="audition.requirements"></p>
-      <div class="form-group">
-          <label for="company">Company: </label>
-            <select name="company" v-model="audition.company.id">
-              <option v-for="company in companies" v-if="company.name !== audition.company.name" :value="company.id">{{ company.name }}</option>
-              <option :value="audition.company.id" selected="true">{{ audition.company.name }}</option>
-            </select>
-      </div>
-      <div class="form-group">
-          <label for="show">Show: </label>
-            <select name="show" v-model="audition.show.id">
-              <option v-for="show in shows" v-if="show.name !== audition.show.name" :value="show.id">{{ show.name }}</option>
-              <option :value="audition.show.id" selected="true">{{ audition.show.name }}</option>
-            </select>
-      </div>
-      <p>Start Time:<datetime type="datetime" v-model="audition.start_time" :auto="true"></datetime></p>
-      <p>End Time:<datetime type="datetime" v-model="audition.end_time" :auto="true"></datetime></p>
-      <input type="submit" value="Submit Changes">
-    </form>
+  <div class="content-outer" v-if="!loading">
+
+      <div id="page-content" class="row page">
+
+         <div id="primary" class="eight columns">
+
+            <section>
+
+              <h1>Editing {{ audition.name }}</h1>
+
+              <p class="lead">Update audition information</p>
+
+              <p>The show must go on...</p>
+
+              <div id="contact-form">
+
+                  <!-- form -->
+                  <form name="contactForm" id="contactForm" method="post" action="" v-on:submit.prevent="updateAudition(audition)">
+                <fieldset>
+
+                        <div><span>
+                         <label for="contactSubject">Audition Name</label>
+                         <input name="contactSubject" type="text" id="contactSubject" size="35" value="" v-model="audition.name"/>
+                        </span></div>
+
+                        <div class="half"><span>
+                          <label for="company"> Company <span class="required">*</span></label>
+                          <select name="company" v-model="audition.company.id">
+                            <option v-for="company in companies" v-if="company.name !== audition.company.name" :value="company.id">{{ company.name }}</option>
+                            <option :value="audition.company.id" selected="true">{{ audition.company.name }}</option>
+                          </select>
+                        </span></div>
+
+                        <div class="half pull-right"><span>
+                          <label for="show"> Show <span class="required">*</span></label>
+                            <select name="show" v-model="audition.show.id">
+                              <option v-for="show in shows" v-if="show.name !== audition.show.name" :value="show.id">{{ show.name }}</option>
+                              <option :value="audition.show.id" selected="true">{{ audition.show.name }}</option>
+                            </select>
+                        </span></div>
+
+                        <div class="half"><span>
+                          <label for="start"> Start Time: <span class="required">*</span></label>
+                          <datetime name="start" type="datetime" v-model="startTime" :auto="true"></datetime>
+                        </span></div>
+
+                        <div class="half pull-right"><span>
+                          <label for="end"> End Time: <span class="required">*</span></label>
+                          <datetime name="end" type="datetime" v-model="endTime" :auto="true"></datetime>
+                        </span></div>
+
+                        <div><span>
+                           <label  for="contactMessage">Requirements <span class="required">*</span></label>
+                           <textarea name="contactMessage"  id="contactMessage" rows="15" cols="50" v-model="audition.requirements"></textarea>
+                        </span></div>
+
+                        <div><span>
+                           <button class="submit">Update</button>
+                           <span id="image-loader">
+                              <img src="images/loader.gif" alt="" />
+                           </span>
+                        </span></div>
+
+                </fieldset>
+              </form> <!-- Form End -->
+
+                  <!-- contact-warning -->
+                  <div v-if="errors.length > 0" id="message-warning">
+                    Please fix the following errors:
+                    <ul>
+                        <li class="text-danger" v-for="error in errors">{{ error }}</li>
+                    </ul>
+                  </div>
+                  <!-- contact-success -->
+              <div id="message-success">
+                     <i class="icon-ok"></i>Your message was sent, thank you!<br />
+              </div>
+
+               </div>
+
+            </section> <!-- section end -->
+
+         </div> 
+       </div>
+
+
+
   </div>
 </template>
 
@@ -41,13 +99,17 @@ export default {
       companies: [],
       shows: [],
       errors: [],
-      loading: false
+      loading: false,
+      startTime: "",
+      endTime: ""
     };
   },
   created: function() {
     this.loading = true;
     axios.get("/api/auditions/" + this.$route.params.id).then(response => {
       this.audition = response.data;
+      this.startTime = response.data.start_time.substring(0, 10) + 'T' + response.data.start_time.substring(11, 16);
+      this.endTime = response.data.end_time.substring(0, 10) + 'T' + response.data.end_time.substring(11, 16);
       axios.get("/api/shows/").then(response => {
       this.shows = response.data;
       });

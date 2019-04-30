@@ -19,51 +19,51 @@
                   <form name="contactForm" id="contactForm" method="post" action="" v-on:submit.prevent="makeNewAudition()">
                 <fieldset>
 
-                        <div>
+                        <div><span>
                          <label for="contactSubject">Audition Name</label>
                          <input name="contactSubject" type="text" id="contactSubject" size="35" value="" v-model="newName"/>
-                        </div>
+                        </span></div>
 
-                        <div>
+                        <div><span>
                            <label for="contactName"> Time Slot Length <span class="required">*</span></label>
                            <input name="contactName" type="text" id="contactName" size="35" value="" v-model="newTimeSlotLength"/>
-                        </div>
+                        </span></div>
 
-                        <div class="half">
+                        <div class="half"><span>
                           <label for="company"> Company <span class="required">*</span></label>
                           <select name="company" v-model="newCompany">
                             <option v-for="company in companies" :value="company.id">{{ company.name }}</option>
                           </select>
-                        </div>
+                        </span></div>
 
-                        <div class="half pull-right">
+                        <div class="half pull-right"><span>
                           <label for="show"> Show <span class="required">*</span></label>
                             <select name="show" v-model="newShow">
                               <option v-for="show in shows" :value="show.id">{{ show.name }}</option>
                             </select>
-                        </div>
+                        </span></div>
 
-                        <div class="half">
+                        <div class="half"><span>
                           <label for="start"> Start Time: <span class="required">*</span></label>
-                          <datetime name="start" type="datetime" v-model="newStartTime"></datetime :auto="true">
-                        </div>
+                          <datetime name="start" type="datetime" v-model="newStartTime" :auto="true"></datetime>
+                        </span></div>
 
-                        <div class="half pull-right">
+                        <div class="half pull-right"><span>
                           <label for="end"> End Time: <span class="required">*</span></label>
-                          <datetime name="end" type="datetime" v-model="newEndTime"></datetime :auto="true">
-                        </div>
+                          <datetime name="end" type="datetime" v-model="newEndTime" :auto="true"></datetime>
+                        </span></div>
 
-                        <div>
+                        <div><span>
                            <label  for="contactMessage">Requirements <span class="required">*</span></label>
                            <textarea name="contactMessage"  id="contactMessage" rows="15" cols="50" v-model="newRequirements"></textarea>
-                        </div>
+                        </span></div>
 
-                        <div>
+                        <div><span>
                            <button class="submit">Create Audition</button>
                            <span id="image-loader">
                               <img src="images/loader.gif" alt="" />
                            </span>
-                        </div>
+                        </span></div>
 
                 </fieldset>
               </form> <!-- Form End -->
