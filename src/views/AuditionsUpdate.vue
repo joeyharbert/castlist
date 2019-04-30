@@ -73,9 +73,6 @@
                     </ul>
                   </div>
                   <!-- contact-success -->
-              <div id="message-success">
-                     <i class="icon-ok"></i>Your message was sent, thank you!<br />
-              </div>
 
                </div>
 

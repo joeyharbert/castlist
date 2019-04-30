@@ -12,6 +12,12 @@
 
               <h1>Login</h1>
 
+                <div v-if="errors.length > 0">
+                    Please fix the following errors:
+                    <ul>
+                        <li class="text-danger" v-for="error in errors">{{ error }}</li>
+                    </ul>
+                </div>
               <div id="contact-form">
 
                   <!-- form -->
@@ -30,13 +36,6 @@
                         <input type="submit" class="btn btn-primary" value="Submit">
                 </fieldset>
               </form> <!-- Form End -->
-
-                  <!-- contact-warning -->
-                  <div id="message-warning"></div>
-                  <!-- contact-success -->
-              <div id="message-success">
-                     <i class="icon-ok"></i>Your message was sent, thank you!<br />
-              </div>
 
                </div>
 
