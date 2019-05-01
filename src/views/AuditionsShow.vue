@@ -66,6 +66,9 @@
                        <div class="nine columns entry-title pull-right">
                           <h3 v-if="!timeSlot.actor">Open</h3>
                           <h3 v-if="timeSlot.actor">Filled by: {{ timeSlot.actor.first_name }} {{ timeSlot.actor.last_name }}</h3>
+                          <div>
+                              <a v-if="(timeSlot.actor && isDirector) && (currentTimeSlot === timeSlot)" v-on:click="timeSlotDestroy(timeSlot)">Delete Slot</a>
+                          </div>
                        </div>
 
                        <div class="three columns post-meta end">
@@ -95,6 +98,7 @@
                               <a v-if="timeSlot.actor && isDirector" class="more-link pull-left"><button class="submit">Save Changes</button></a>
                             </div>
                           </form>
+                          
 
                         </div>
                         <a v-if="!timeSlot.actor && !isDirector" class="more-link pull-right" v-on:click="signUp(timeSlot)">Sign Up!<i class="fa fa-arrow-circle-o-right"></i></a>
@@ -197,6 +201,7 @@ export default {
     toggleActorInfo: function(actor) {
       if(actor === this.currentActor) {
         this.currentActor = {};
+        this.currentTimeSlot = {};
       } else {
         this.currentActor = actor;
       }
@@ -210,7 +215,6 @@ export default {
     },
     timeSlotUpdate: function(timeSlot, actor) {
       var params = {actor_id: actor.id};
-      console.log(actor);
       axios.patch("/api/time_slots/" + timeSlot.id, params)
       .then(response => {
         console.log(response.data);
@@ -222,6 +226,17 @@ export default {
         this.errors = error.response.data.errors;
       });
       this.toggleTimeSlotEdit(timeSlot);
+    },
+    timeSlotDestroy: function(timeSlot) {
+      axios.delete("/api/time_slots/" + timeSlot.id)
+      .then(response => {
+        console.log(response.data);
+        var index = this.timeSlots.indexOf(timeSlot);
+        this.timeSlots.splice(index, 1); //replace old ts with new one
+      })
+      .catch(error => {
+        this.errors = error.response.data.errors;
+      });
     }
   }
 };
