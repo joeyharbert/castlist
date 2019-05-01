@@ -10,6 +10,7 @@ import VueSwing from 'vue-swing'
 Vue.use(Datetime)
 Vue.component('vue-swing', VueSwing)
 
+
 axios.defaults.baseURL = 
   process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/";
 

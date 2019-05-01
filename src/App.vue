@@ -25,9 +25,9 @@
                     </li>
                     <li><span><router-link to="/login">User</router-link></span>
                        <ul>
-                          <li><router-link to="/login">Login</router-link></li>
-                          <li><router-link to="/logout">Logout</router-link></li>
-                          <li><router-link to="/signup">Signup</router-link></li>
+                          <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
+                          <li v-if="isLoggedIn"><router-link to="/logout">Logout</router-link></li>
+                          <li v-if="!isLoggedIn"><router-link to="/signup">Signup</router-link></li>
                        </ul>
                     </li>
 
@@ -52,9 +52,9 @@
           <li class="current"><router-link to="/">Home</router-link></li>
                    <li><router-link to="/auditions">Auditions</router-link>
                     </li>
-                    <li><router-link to="/login">Login</router-link></li>
-                    <li><router-link to="/logout">Logout</router-link></li>
-                    <li><router-link to="/signup">Signup</router-link></li>
+                    <li v-if="!isLoggedIn"><router-link v-on:click="loggedInToggle()" to="/login">Login</router-link></li>
+                    <li v-if="isLoggedIn" v-on:click="loggedInToggle()"><router-link to="/logout">Logout</router-link></li>
+                    <li v-if="!isLoggedIn" v-on:click="loggedInToggle()"><router-link to="/signup">Signup</router-link></li>
          </ul>
 
             <ul class="footer-social">
@@ -81,24 +81,21 @@
   </div>
 </template>
 
-<style>
-/*#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}*/
-</style>
+<script>
+  export default {
+  data: function() {
+    return {
+      isLoggedIn: false
+    }; 
+  },
+  created: function() {
+    this.isLoggedIn = !!localStorage.getItem("jwt");
+  },
+  methods: {
+    logInToggle: function() {
+      this.isLoggedIn = !!localStorage.getItem("jwt");
+    }
+  }
+};
+</script>

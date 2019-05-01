@@ -72,7 +72,7 @@
                         <li class="text-danger" v-for="error in errors">{{ error }}</li>
                     </ul>
                   </div>
-                  <!-- contact-success -->
+                  <!-- contact-success --> 
 
                </div>
 

@@ -77,13 +77,29 @@
                     </div>
 
                     <div class="nine columns pull-right post-content">
-                        <div class="actor-info" v-if="timeSlot.actor && timeSlot.actor === currentActor">
+                        <div class="actor-info" v-if="(timeSlot.actor && timeSlot.actor === currentActor) && currentTimeSlot !== timeSlot">
                           <div>Phone: {{ timeSlot.actor.phone }}</div>
                           <div>Email: {{ timeSlot.actor.email }}</div>
                           <div>Union Status: {{ timeSlot.actor.union_status }}</div>
+                          <div><a v-if="timeSlot.actor && isDirector" class="more-link pull-left" v-on:click="toggleTimeSlotEdit(timeSlot)">Edit Slot</a></div>
+                        </div>
+                        <div class="actor-edit" v-if="currentTimeSlot === timeSlot">
+
+                          <form v-on:submit.prevent="timeSlotUpdate(timeSlot, timeSlot.actor)">
+                            <label for="actor">Actor</label>
+                            <select name="actor" v-model="timeSlot.actor">
+                              <option v-for="actor in actors" v-if="actor.id !== timeSlot.actor.id" :value="actor">{{actor.first_name}} {{actor.last_name}}</option>
+                              <option :value="timeSlot.actor" selected="true">{{timeSlot.actor.first_name}} {{timeSlot.actor.last_name}}</option>
+                            </select>
+                            <div>
+                              <a v-if="timeSlot.actor && isDirector" class="more-link pull-left"><button class="submit">Save Changes</button></a>
+                            </div>
+                          </form>
+
                         </div>
                         <a v-if="!timeSlot.actor && !isDirector" class="more-link pull-right" v-on:click="signUp(timeSlot)">Sign Up!<i class="fa fa-arrow-circle-o-right"></i></a>
-                        <a v-if="timeSlot.actor && isDirector" class="more-link pull-right" v-on:click="toggleActorInfo(timeSlot.actor)">More Info<i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a v-if="(timeSlot.actor && isDirector) && currentActor !== timeSlot.actor" class="more-link pull-right" v-on:click="toggleActorInfo(timeSlot.actor)">More Info<i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a v-if="(timeSlot.actor && isDirector) && currentActor === timeSlot.actor" class="more-link pull-right" v-on:click="toggleActorInfo(timeSlot.actor)">Less Info<i class="fa fa-arrow-circle-o-left"></i></a>
                     </div>
 
                  </article> <!-- Entry End -->
@@ -118,6 +134,8 @@ export default {
       isDirector: false,
       currentDirector: {},
       currentActor: {},
+      currentTimeSlot: {},
+      actors: []
     };
   },
   created: function() {
@@ -126,7 +144,10 @@ export default {
       this.audition = response.data;
       this.timeSlots = this.audition.time_slots;
       this.isDirector = !!(this.audition.directors[0].phone);
-      this.loading = false;
+      axios.get("/api/users/").then(response => {
+          this.actors = response.data.filter(user => user.type === "Actor")
+          this.loading = false;
+        });
     });
   },
   methods: {
@@ -179,6 +200,28 @@ export default {
       } else {
         this.currentActor = actor;
       }
+    },
+    toggleTimeSlotEdit: function(timeSlot) {
+      if(timeSlot === this.currentTimeSlot) {
+        this.currentTimeSlot = {};
+      } else {
+        this.currentTimeSlot = timeSlot;
+      }
+    },
+    timeSlotUpdate: function(timeSlot, actor) {
+      var params = {actor_id: actor.id};
+      console.log(actor);
+      axios.patch("/api/time_slots/" + timeSlot.id, params)
+      .then(response => {
+        console.log(response.data);
+        var index = this.timeSlots.indexOf(timeSlot);
+        var newTimeSlot = response.data;
+        this.timeSlots.splice(index, 1, newTimeSlot); //replace old ts with new one
+      })
+      .catch(error => {
+        this.errors = error.response.data.errors;
+      });
+      this.toggleTimeSlotEdit(timeSlot);
     }
   }
 };
