@@ -11,6 +11,7 @@ import AuditionsUpdate from './views/AuditionsUpdate.vue';
 import AuditionsLive from './views/AuditionsLive.vue';
 import ShowsShow from './views/ShowsShow.vue';
 import ShowsIndex from './views/ShowsIndex.vue';
+import ShowsNew from './views/ShowsNew.vue';
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/shows/',
       name: 'shows-index',
       component: ShowsIndex
+    },
+    {
+      path: '/shows/new',
+      name: 'shows-new',
+      component: ShowsNew
     },
     {
       path: '/shows/:id',
