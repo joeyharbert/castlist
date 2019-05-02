@@ -8,6 +8,7 @@
             <h1>{{ show.name }}<span>.</span></h1>
 
             <p>{{show.description}}</p>
+            <p><a v-if="isDirector" v-on:click="destroyShow()">Delete Show</a></p>
          </div>
 
       </div>
@@ -58,14 +59,27 @@
   export default {
     data: function() {
       return {
-        show: {}
+        show: {},
+        isDirector: false,
+        loading: false
       };
     },
     created: function() {
       axios.get("/api/shows/" + this.$route.params.id).then(response => {
       this.show = response.data;
+      axios.get("/api/users/current").then(response => {
+        if(response.data.type === "Director") {
+          this.isDirector = true;
+        }
+      });
     });
     },
-    methods: {}
+    methods: {
+      destroyShow: function() {
+        axios.delete("/api/shows/" + this.$route.params.id).then(response => {
+          this.$router.push("/shows/");
+        });
+      }
+    }
   };
 </script>

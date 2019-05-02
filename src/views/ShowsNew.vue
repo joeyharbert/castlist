@@ -102,10 +102,16 @@ export default {
         description: ""
       }],
       loading: false,
-      errors: []
+      errors: [],
+      isDirector: false
     };
   },
   created: function() {
+    axios.get("/api/users/current").then(response => {
+      if(response.data.type === "Director") {
+        this.isDirector = true;
+      }
+    });
   },
   methods: {
     makeNewShow: function() {
