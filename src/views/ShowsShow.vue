@@ -8,7 +8,7 @@
             <h1>{{ show.name }}<span>.</span></h1>
 
             <p>{{show.description}}</p>
-            <p><a v-if="isDirector" v-on:click="destroyShow()">Delete Show</a></p>
+            <div><a v-if="isDirector" v-on:click="updateShow()">Edit Show</a> | <a v-if="isDirector" v-on:click="destroyShow()">Delete Show</a></div>
          </div>
 
       </div>
@@ -79,6 +79,9 @@
         axios.delete("/api/shows/" + this.$route.params.id).then(response => {
           this.$router.push("/shows/");
         });
+      },
+      updateShow: function() {
+        this.$router.push("/shows/" + this.$route.params.id + "/edit");
       }
     }
   };
