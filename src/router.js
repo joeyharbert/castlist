@@ -1,14 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Signup from "./views/Signup.vue";
+import Login from "./views/Login.vue";
+import Logout from "./views/Logout.vue";
 import AuditionsShow from './views/AuditionsShow.vue';
 import AuditionsIndex from './views/AuditionsIndex.vue';
 import AuditionsNew from './views/AuditionsNew.vue';
 import AuditionsUpdate from './views/AuditionsUpdate.vue';
 import AuditionsLive from './views/AuditionsLive.vue';
-import Signup from "./views/Signup.vue";
-import Login from "./views/Login.vue";
-import Logout from "./views/Logout.vue";
+import ShowsShow from './views/ShowsShow.vue';
+import ShowsIndex from './views/ShowsIndex.vue';
 
 Vue.use(Router)
 
@@ -45,6 +47,16 @@ export default new Router({
       path: '/auditions/:id/live',
       name: 'auditions-live',
       component: AuditionsLive
+    },
+    {
+      path: '/shows/',
+      name: 'shows-index',
+      component: ShowsIndex
+    },
+    {
+      path: '/shows/:id',
+      name: 'shows-show',
+      component: ShowsShow
     },
     {
       path: '/signup',

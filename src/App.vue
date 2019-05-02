@@ -30,7 +30,7 @@
                           <li v-if="!isLoggedIn"><router-link to="/signup">Signup</router-link></li>
                        </ul>
                     </li>
-
+                    <li><router-link to="/shows">Shows</router-link></li>
                  </ul> <!-- end #nav -->
 
               </nav> <!-- end #nav-wrap -->
@@ -52,6 +52,7 @@
           <li class="current"><router-link to="/">Home</router-link></li>
                    <li><router-link to="/auditions">Auditions</router-link>
                     </li>
+                    <li><router-link to="/shows">Shows</router-link></li>
                     <li v-if="!isLoggedIn"><router-link v-on:click="loggedInToggle()" to="/login">Login</router-link></li>
                     <li v-if="isLoggedIn" v-on:click="loggedInToggle()"><router-link to="/logout">Logout</router-link></li>
                     <li v-if="!isLoggedIn" v-on:click="loggedInToggle()"><router-link to="/signup">Signup</router-link></li>
