@@ -12,6 +12,7 @@ import AuditionsLive from './views/AuditionsLive.vue';
 import ShowsShow from './views/ShowsShow.vue';
 import ShowsIndex from './views/ShowsIndex.vue';
 import ShowsNew from './views/ShowsNew.vue';
+import ShowsUpdate from './views/ShowsUpdate.vue';
 
 Vue.use(Router)
 
@@ -63,6 +64,11 @@ export default new Router({
       path: '/shows/:id',
       name: 'shows-show',
       component: ShowsShow
+    },
+    {
+      path: '/shows/:id/edit',
+      name: 'shows-update',
+      component: ShowsUpdate
     },
     {
       path: '/signup',
