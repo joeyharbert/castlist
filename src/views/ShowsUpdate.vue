@@ -5,9 +5,9 @@
         <div class="row">
 
            <div class="ten columns centered text-center">
-              <h1>Create<span>.</span></h1>
+              <h1>Edit<span>.</span></h1>
 
-              <p>A bit of the fire that lit up the stars.</p>
+              <p>Onto the next draft.</p>
            </div>
 
         </div>
@@ -43,20 +43,24 @@
                         </span></div>
 
                         <div v-for="role in show.roles">
-                          <div class="half"><span>
+                          <div><span>
                              <label for="contactName"> Role Name:</label>
                              <input name="contactName" type="text" id="contactName" size="35" value="" v-model="role.name"/>
                           </span></div>
 
-                          <div class="half pull-right"><span>
+                          <div><span class="role">
                              <label for="contactName"> Description:</label>
                              <input name="contactName" type="text" id="contactName" size="35" value="" v-model="role.description"/>
                           </span></div>
+
+                          <nav class="pagination add-bottom">
+                            <a v-on:click="removeRole(role)" class="page-numbers">Delete Role</a>
+                          </nav>
                         </div>
-                        <div class="half pull-right">
+
+                        <div>
                             <nav class="pagination add-bottom pull-right">
-                              <a v-on:click="addRole()" class="page-numbers">+</a>
-                              <a v-on:click="removeRole()" class="page-numbers">-</a>
+                              <a v-on:click="addRole()" class="page-numbers">Add Role</a>
                             </nav>
                         </div>
 
@@ -130,8 +134,9 @@ export default {
         description: ""
       });
     },
-    removeRole: function() {
-      this.show.roles.pop();
+    removeRole: function(role) {
+      var index = this.show.roles.indexOf(role);
+      this.show.roles.splice(index, 1);
     }
   }
 };

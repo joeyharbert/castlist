@@ -1089,6 +1089,9 @@ ol.commentlist {
    width: 50%;
 }
 #contact-form .half { width: 47%; }
+#contact-form .third { 
+   width: 17%; 
+}
 #contact-form label {
 	display: inline-block;
 	float: left;
