@@ -127,7 +127,12 @@ export default {
         this.$router.push("/shows/" + show.id);
         })
       .catch(error => {
-        this.errors = error.response.data.errors;
+       if(error.toString().includes("401")) {
+          console.log("I here");
+          this.errors.push("Unauthorized: Please log in under a director account to continue");
+        } else {
+          this.errors = error.response.data.errors;
+        }
       });
     },
     addRole: function() {
