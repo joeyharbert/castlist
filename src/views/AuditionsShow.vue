@@ -43,9 +43,9 @@
                   </div>
 
                   <ul class="portfolio-meta-list">
-                   <li><span>Date: </span>{{ audition.start_time.substring(0, 10)}}</li>
-                   <li><span>Start Time: </span>{{ audition.start_time.substring(10, 16)}}</li>
-                   <li><span>End Time: </span>{{ audition.end_time.substring(10, 16) }}</li>
+                   <li><span>Date: </span>{{ audition.start_time.toLocaleDateString()}}</li>
+                   <li><span>Start Time: </span>{{ audition.start_time.toTimeString().substring(0, 5)}}</li>
+                   <li><span>End Time: </span>{{ audition.end_time.toTimeString().substring(0, 5) }}</li>
                    <li><a v-on:click="editAudition(audition)" v-if="isDirector">Edit Audition</a></li>
                    <li><a v-on:click="destroyAudition(audition)" v-if="isDirector">Delete Audition</a></li>
                   </ul>
@@ -73,8 +73,8 @@
 
                        <div class="three columns post-meta end">
                           <time datetime="2014-01-31" class="post-date" pubdate="">{{ timeSlot.start_time.substring(0, 10)}}</time>
-                          <span class="dauthor">Start: {{ timeSlot.start_time.substring(10, 16) }}</span>
-                          <span class="dauthor">End: {{ timeSlot.end_time.substring(10, 16) }}</span>
+                          <span class="dauthor">Start: {{ new Date(timeSlot.start_time).toTimeString().substring(0, 5) }}</span>
+                          <span class="dauthor">End: {{ new Date(timeSlot.end_time).toTimeString().substring(0, 5) }}</span>
                        </div>
 
                     </div>
@@ -146,6 +146,8 @@ export default {
     this.loading = true;
     axios.get("/api/auditions/" + this.$route.params.id).then(response => {
       this.audition = response.data;
+      this.audition.start_time = new Date(this.audition.start_time);
+      this.audition.end_time = new Date(this.audition.end_time);
       this.timeSlots = this.audition.time_slots;
       this.isDirector = !!(this.audition.directors[0].phone);
       axios.get("/api/users/").then(response => {
