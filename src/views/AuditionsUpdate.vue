@@ -105,8 +105,11 @@ export default {
     this.loading = true;
     axios.get("/api/auditions/" + this.$route.params.id).then(response => {
       this.audition = response.data;
-      this.startTime = response.data.start_time.substring(0, 10) + 'T' + response.data.start_time.substring(11, 16);
-      this.endTime = response.data.end_time.substring(0, 10) + 'T' + response.data.end_time.substring(11, 16);
+      this.audition.start_time = new Date(this.audition.start_time);
+      this.audition.end_time = new Date(this.audition.end_time);
+      this.startTime = this.audition.start_time.toJSON()
+      this.endTime = this.audition.end_time.toJSON();
+
       axios.get("/api/shows/").then(response => {
       this.shows = response.data;
       });
