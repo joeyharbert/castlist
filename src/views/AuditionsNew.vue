@@ -82,7 +82,7 @@
               </form> <!-- Form End -->
 
                   <!-- contact-warning -->
-                  <div v-if="errors.length > 0" id="message-warning">
+                  <div v-if="errors.length > 0">
                     Please fix the following errors:
                     <ul>
                         <li class="text-danger" v-for="error in errors">{{ error }}</li>
@@ -151,7 +151,12 @@ export default {
         this.$router.push("/auditions/" + audition.id);
         })
       .catch(error => {
-        this.errors = error.response.data.errors;
+        if(error.toString().includes("401")) {
+          console.log("I here");
+          this.errors.push("Unauthorized: Please log in under a director account to continue");
+        } else {
+          this.errors = error.response.data.errors;
+        }
       });
     }
   }

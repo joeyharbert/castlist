@@ -42,13 +42,13 @@
                            <textarea name="contactMessage"  id="contactMessage" rows="15" cols="50" v-model="show.description"></textarea>
                         </span></div>
 
-                        <div v-for="role in show.roles">
+                        <div v-for="role in show.roles" class="role">
                           <div><span>
                              <label for="contactName"> Role Name:</label>
                              <input name="contactName" type="text" id="contactName" size="35" value="" v-model="role.name"/>
                           </span></div>
 
-                          <div><span class="role">
+                          <div><span>
                              <label for="contactName"> Description:</label>
                              <input name="contactName" type="text" id="contactName" size="35" value="" v-model="role.description"/>
                           </span></div>
