@@ -72,7 +72,7 @@
                        </div>
 
                        <div class="three columns post-meta end">
-                          <time datetime="2014-01-31" class="post-date" pubdate="">{{ timeSlot.start_time.substring(0, 10)}}</time>
+                          <time datetime="2014-01-31" class="post-date" pubdate="">{{ new Date(timeSlot.start_time).toLocaleDateString()}}</time>
                           <span class="dauthor">Start: {{ new Date(timeSlot.start_time).toTimeString().substring(0, 5) }}</span>
                           <span class="dauthor">End: {{ new Date(timeSlot.end_time).toTimeString().substring(0, 5) }}</span>
                        </div>
@@ -80,13 +80,13 @@
                     </div>
 
                     <div class="nine columns pull-right post-content">
-                        <div class="actor-info" v-if="(timeSlot.actor && timeSlot.actor === currentActor) && currentTimeSlot !== timeSlot">
+                        <div class="actor-info" v-if="(timeSlot.actor && timeSlot.actor === currentActor) && (currentTimeSlot !== timeSlot) && isDirector">
                           <div>Phone: {{ timeSlot.actor.phone }}</div>
                           <div>Email: {{ timeSlot.actor.email }}</div>
                           <div>Union Status: {{ timeSlot.actor.union_status }}</div>
                           <div><a v-if="timeSlot.actor && isDirector" class="more-link pull-left" v-on:click="toggleTimeSlotEdit(timeSlot)">Edit Slot</a></div>
                         </div>
-                        <div class="actor-edit" v-if="currentTimeSlot === timeSlot">
+                        <div class="actor-edit" v-if="(currentTimeSlot === timeSlot) && isDirector">
 
                           <form v-on:submit.prevent="timeSlotUpdate(timeSlot, timeSlot.actor)">
                             <label for="actor">Actor</label>
@@ -101,7 +101,18 @@
                           
 
                         </div>
-                        <a v-if="!timeSlot.actor && !isDirector" class="more-link pull-right" v-on:click="signUp(timeSlot)">Sign Up!<i class="fa fa-arrow-circle-o-right"></i></a>
+
+                        <div v-if="!isDirector && (currentTimeSlot === timeSlot)">
+                            <form>
+                              <div>
+                                <label for="headshot">Headshot</label>
+                                <input type="file" id="headshot"ref="headshot" @change="handleFile">
+                                <div><small>Please make sure your headshot is cropped to 8x10.</small></div>
+                              </div>
+                            </form>
+                        </div>
+                        <a v-if="(!timeSlot.actor && !isDirector) && currentTimeSlot !== timeSlot" class="more-link pull-right" v-on:click="toggleTimeSlotEdit(timeSlot)">Sign Up!<i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a v-if="(!timeSlot.actor && !isDirector) && currentTimeSlot === timeSlot" class="more-link pull-right" v-on:click="signUp(timeSlot)">Submit<i class="fa fa-arrow-circle-o-right"></i></a>
                         <a v-if="(timeSlot.actor && isDirector) && currentActor !== timeSlot.actor" class="more-link pull-right" v-on:click="toggleActorInfo(timeSlot.actor)">More Info<i class="fa fa-arrow-circle-o-right"></i></a>
                         <a v-if="(timeSlot.actor && isDirector) && currentActor === timeSlot.actor" class="more-link pull-right" v-on:click="toggleActorInfo(timeSlot.actor)">Less Info<i class="fa fa-arrow-circle-o-left"></i></a>
                     </div>
@@ -139,7 +150,8 @@ export default {
       currentDirector: {},
       currentActor: {},
       currentTimeSlot: {},
-      actors: []
+      actors: [],
+      headshot: ''
     };
   },
   created: function() {
@@ -148,7 +160,7 @@ export default {
       this.audition = response.data;
       this.audition.start_time = new Date(this.audition.start_time);
       this.audition.end_time = new Date(this.audition.end_time);
-      this.timeSlots = this.audition.time_slots;
+      this.timeSlots = this.audition.time_slots
       this.isDirector = !!(this.audition.directors[0].phone);
       axios.get("/api/users/").then(response => {
           this.actors = response.data.filter(user => user.type === "Actor")
@@ -182,7 +194,14 @@ export default {
       this.$router.push("/auditions/" + audition.id + "/edit");
     },
     signUp: function(timeSlot) {
-      axios.patch("/api/time_slots/" + timeSlot.id)
+      var params = new FormData();
+      params.append('headshot', this.headshot[0]);
+      axios.patch("/api/time_slots/" + timeSlot.id, params,
+                {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                })
       .then(response => {
         console.log(response);
         var index = this.timeSlots.indexOf(timeSlot);
@@ -192,6 +211,9 @@ export default {
       .catch(error => {
         this.errors = error.response.data.errors;
       });
+    },
+    handleFile: function(e) {
+      this.headshot = e.target.files || e.dataTransfer.files;
     },
     toggleDirectorInfo: function(director) {
       if(director === this.currentDirector) {
