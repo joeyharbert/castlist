@@ -95,13 +95,7 @@
     },
     methods: {
       next: function() {
-        if (this.index < this.timeSlots.length - 1) {
-          this.index++;
-        }
-        else {
-          this.index = 0;
-        }
-        this.currentTimeSlot = this.timeSlots[this.index];
+        this.timeSlots.pop();
       },
       sort: function(timeSlot, num) {
         var params = {sort: num};
@@ -109,7 +103,6 @@
           .then(response => {
             console.log(response.data);
             });
-        this.next();
       },
       keypress: function(e) {
         if(e.key == "ArrowUp") {
