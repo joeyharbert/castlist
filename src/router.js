@@ -9,6 +9,7 @@ import AuditionsIndex from './views/AuditionsIndex.vue';
 import AuditionsNew from './views/AuditionsNew.vue';
 import AuditionsUpdate from './views/AuditionsUpdate.vue';
 import AuditionsLive from './views/AuditionsLive.vue';
+import AuditionsCallback from './views/AuditionsCallback.vue';
 import ShowsShow from './views/ShowsShow.vue';
 import ShowsIndex from './views/ShowsIndex.vue';
 import ShowsNew from './views/ShowsNew.vue';
@@ -49,6 +50,11 @@ export default new Router({
       path: '/auditions/:id/live',
       name: 'auditions-live',
       component: AuditionsLive
+    },
+    {
+      path: '/auditions/:id/callback',
+      name: 'auditions-callback',
+      component: AuditionsCallback
     },
     {
       path: '/shows/',
