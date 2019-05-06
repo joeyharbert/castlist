@@ -19,8 +19,13 @@
 
       <div id="page-content" class="live">
 
+        <!-- Background placeholder images to make space -->
          <div class="row add-bottom">
           <img src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif" width="500">
+          <img src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif" width="500">
+          <img src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif" width="500">
+          <img src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif" width="500"> 
+          <!--  -->
           <vue-swing
             @throwout="onThrowout"
             :config="config"
@@ -28,8 +33,7 @@
           >
             <div class="card" style="padding-top: 24px;" v-for="timeSlot in timeSlots" :id="timeSlot.id">
 
-               <!-- <img :src="timeSlot.headshot"> -->
-
+               <img :src="timeSlot.headshot.url">               
                <h1 class="title-heading">{{timeSlot.actor.first_name}} {{timeSlot.actor.last_name}}</h1>
 
 <!--                <p class="lead add-bottom">Sort: {{timeSlot.sort}}
@@ -85,6 +89,7 @@
         this.show = response.data.show.name;
         this.timeSlots = response.data.time_slots.filter(ts => ts.actor).reverse();
         this.currentTimeSlot = this.timeSlots[0]
+        console.log(this.currentTimeSlot);
         this.loading = false;
       });
     },

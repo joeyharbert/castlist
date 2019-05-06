@@ -1093,15 +1093,26 @@ ol.commentlist {
   font-size: 72px;
   height: 200px;
   justify-content: center;
-  left: calc(50% - 100px);
+  left: calc(50% - 285px);
   position: absolute;
   top: calc(50% - 100px);
   margin-left: auto;
   margin-right: auto;
-  width: 200px;
+  width: 600px;
+  height: 750px;
+}
+.card img {
+   width: 500px;
+   height: 625px;
+   clear: both;
+   display: block;
+   position: absolute;
+   bottom: 12%;
 }
 .card h1{
-  margin-left: 8%;
+   position: absolute;
+   float: right;
+   top: 680px;
 }
 .vdatetime-popup {
    float: clear;

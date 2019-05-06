@@ -95,6 +95,11 @@
                               <option :value="timeSlot.actor" selected="true">{{timeSlot.actor.first_name}} {{timeSlot.actor.last_name}}</option>
                             </select>
                             <div>
+                                <label for="headshot">Headshot</label>
+                                <input type="file" id="headshot"ref="headshot" @change="handleFile">
+                                <div><small>Please make sure the headshot is cropped to 8x10.</small></div>
+                              </div>
+                            <div>
                               <a v-if="timeSlot.actor && isDirector" class="more-link pull-left"><button class="submit">Save Changes</button></a>
                             </div>
                           </form>
@@ -238,7 +243,9 @@ export default {
       }
     },
     timeSlotUpdate: function(timeSlot, actor) {
-      var params = {actor_id: actor.id};
+      var params = new FormData();
+      if(this.headshot !== '') {params.append('headshot', this.headshot[0]);}
+      params.append('actor_id', actor.id);
       axios.patch("/api/time_slots/" + timeSlot.id, params)
       .then(response => {
         console.log(response.data);
