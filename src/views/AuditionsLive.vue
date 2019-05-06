@@ -48,6 +48,7 @@
           <a class="page-numbers next" v-on:click="swing('LEFT')">X</a>
           <a class="page-numbers next" v-on:click="swing('RIGHT')">Callback</a>
           <a class="page-numbers next" v-on:click="next()">Next</a>
+          <div>Swipe right to callback the actor, up to star them for future productions, and left to skip. Or, if you're not ready to make a call, click next.</div>
          </nav>
        </div>
      </div>
