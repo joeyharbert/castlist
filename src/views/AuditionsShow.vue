@@ -48,6 +48,7 @@
                    <li><span>End Time: </span>{{ audition.end_time.toTimeString().substring(0, 5) }}</li>
                    <li><a v-on:click="editAudition(audition)" v-if="isDirector">Edit Audition</a></li>
                    <li><a v-on:click="destroyAudition(audition)" v-if="isDirector">Delete Audition</a></li>
+                   <li><a v-on:click="callback(audition)" v-if="isDirector">Callback List</a></li>
                   </ul>
 
                   <a class="button" v-on:click="goLive(audition)" v-if="isDirector">Live View</a>
@@ -268,6 +269,9 @@ export default {
       .catch(error => {
         this.errors = error.response.data.errors;
       });
+    },
+    callback: function(audition) {
+      this.$router.push("/auditions/" + audition.id + "/callback");
     }
   }
 };

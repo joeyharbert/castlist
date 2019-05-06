@@ -49,6 +49,7 @@
           <a class="page-numbers next" v-on:click="swing('RIGHT')">Callback</a>
           <a class="page-numbers next" v-on:click="next()">Next</a>
           <div>Swipe right to callback the actor, up to star them for future productions, and left to skip. Or, if you're not ready to make a call, click next.</div>
+          <div><button @click="callback()">Callback List</button></div>
          </nav>
        </div>
      </div>
@@ -79,7 +80,8 @@
           ],
           minThrowOutDistance: 250,
           maxThrowOutDistance: 300
-        }
+        },
+        auditionId: ""
       };
     },
     created: function() {
@@ -88,6 +90,7 @@
       axios.get("/api/auditions/" + this.$route.params.id).then(response => {
         this.title = response.data.name;
         this.show = response.data.show.name;
+        this.auditionId = response.data.id;
         this.timeSlots = response.data.time_slots.filter(ts => ts.actor).reverse();
         this.currentTimeSlot = this.timeSlots[0]
         console.log(this.currentTimeSlot);
@@ -135,6 +138,9 @@
         }
 
         setTimeout(() => this.timeSlots.splice(index, 1), 250);
+      },
+      callback: function() {
+        this.$router.push("/auditions/" + this.auditionId + "/callback");
       }
     }
   };

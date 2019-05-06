@@ -28,7 +28,21 @@
 
      </div>
 
+     <div class="row">
+      <div class="pull-right">
+        <label for="sort">Sort</label>
+        <select name="sort" @change="sort">
+          <option selected="true" value="0">Called Back</option>
+          <option value="1">Starred</option>
+          <!-- <option value="2">Cast</option> -->
+          <option value="none">None</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+     </div>
+
       <div id="page-content">
+
 
         <div class="row">
 
@@ -39,10 +53,14 @@
             <div class="six columns">
                <h3 class="half-bottom">Info</h3>
             </div>
+
+            <div class="three columns">
+               <h3 class="half-bottom">Sort</h3>
+            </div>
             <hr>
          </div>
 
-         <div class="row" v-for="timeSlot in timeSlots">
+         <div class="row" v-for="timeSlot in sortedSlots">
           <div class="three columns">
                <p>{{timeSlot.actor.first_name}} {{timeSlot.actor.last_name}}</p>
             </div>
@@ -52,7 +70,9 @@
                <div>Email: {{ timeSlot.actor.email }}</div>
                <div>Union Status: {{ timeSlot.actor.union_status }}</div>
             </div>
-
+            <div class="three columns">
+               <p>{{ timeSlot.sort }}</p>
+            </div>
             <hr>
          </div>
 
@@ -76,7 +96,8 @@
         loading: false,
         title: "",
         show: "",
-        timeSlots: []
+        timeSlots: [],
+        sortedSlots: []
       };
     },
     created: function() {
@@ -88,12 +109,34 @@
         axios.get("/api/auditions/" + this.$route.params.id).then(response => {
             this.title = response.data.name;
             this.show = response.data.show.name;
-            this.timeSlots = response.data.time_slots.filter(ts => ts.sort === "callback");
-            console.log(this.timeSlots);
+            this.timeSlots = response.data.time_slots.filter(ts => ts.actor);
             this.loading = false;
+
+            this.sortedSlots = this.timeSlots.filter(ts => ts.sort === "callback");
           });
       });
     },
-    methods: {}
+    methods: {
+      sort: function(e) {
+        var value = e.target.value;
+
+        if(value === "0") {
+          //callback
+          this.sortedSlots = this.timeSlots.filter(ts => ts.sort === "callback");
+        } else if(value === "1") {
+          //starred
+          this.sortedSlots = this.timeSlots.filter(ts => ts.sort === "starred");
+        } else if(value === "2") {
+          //cast
+          this.sortedSlots = this.timeSlots.filter(ts => ts.sort === "cast");
+        } else if(value === "none") {
+          //no sort
+          this.sortedSlots = this.timeSlots.filter(ts => ts.sort === null);
+        } else if(value === "all") {
+          //all timeslots
+          this.sortedSlots = this.timeSlots;
+        }
+      }
+    }
   };
 </script>
