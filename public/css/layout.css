@@ -1090,7 +1090,7 @@ ol.commentlist {
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  font-size: 72px;
+  /*font-size: 72px;*/
   height: 200px;
   justify-content: center;
   left: calc(50% - 285px);
@@ -1108,6 +1108,28 @@ ol.commentlist {
    display: block;
    position: absolute;
    bottom: 12%;
+}
+.tag {
+   position: absolute;
+   border: solid;
+   border-radius: 20px;
+   padding: 10px;
+   font-size: 50px;
+}
+#callback {
+   bottom: 750px;
+   left: 75%;
+   color: #28c111;
+}
+#starred {
+   left: 45%;
+   bottom: 800px;
+   color: #09c5e2;
+}
+#no {
+   bottom: 750px;
+   right: 75%;
+   color: #c63535;
 }
 .card h1{
    position: absolute;

@@ -33,6 +33,17 @@
             :config="config"
             ref="vueswing"
           >
+            <transition-group appear enter-active-class="animated fadeIn" leave-active-class="animated rollOut">
+              <div class="tag" id="callback" v-if="callback" :key="callback">
+                  <div>Callback</div>
+              </div>
+              <div class="tag" id="starred" v-if="starred" :key="starred">
+                  <div>Starred</div>
+              </div>
+              <div class="tag" id="no" v-if="no" :key="no">
+                  <div>No</div>
+              </div>
+            </transition-group>
             <div class="card" style="padding-top: 24px;" v-for="timeSlot in timeSlots" :id="timeSlot.id">
 
                <img :src="timeSlot.headshot.url">               
@@ -94,7 +105,10 @@
         },
         auditionId: "",
         notebook: [],
-        note: ""
+        note: "",
+        callback: false,
+        starred: false,
+        no: false
       };
     },
     created: function() {
@@ -115,6 +129,9 @@
         this.timeSlots.pop();
         this.currentTimeSlot = this.timeSlots[this.timeSlots.length - 1];
         this.notebook = this.currentTimeSlot.notes;
+        this.callback = false;
+        this.starred = false;
+        this.no = false;
       },
       sort: function(timeSlot, num) {
         var params = {sort: num};
@@ -148,13 +165,16 @@
         var timeSlot = this.timeSlots.find(x => x.id === parseInt(target.id));
         if (throwDirection.description === 'RIGHT') {
           this.sort(timeSlot, 0); //0 === callback
+          this.callback = true;
         } else if (throwDirection.description === 'UP') {
           this.sort(timeSlot, 1); //1 === starred
+          this.starred = true;
         } else if (throwDirection.description === 'LEFT') {
           this.sort(timeSlot, 'none');
+          this.no = true;
         }
 
-        setTimeout(() => this.next(), 250);
+        setTimeout(() => this.next(), 450);
       },
       callback: function() {
         this.$router.push("/auditions/" + this.auditionId + "/callback");
