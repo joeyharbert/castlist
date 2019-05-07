@@ -1114,6 +1114,11 @@ ol.commentlist {
    float: right;
    top: 680px;
 }
+.live-textarea {
+   margin-left: auto;
+   margin-right: auto;
+   width: 600px;
+}
 .vdatetime-popup {
    float: clear;
    width: 50%;

@@ -42,13 +42,21 @@
             </div>
           </vue-swing>
          </div> <!-- Row End-->
+         <div class="row">
+          <div v-for="note in notebook">
+            <div class="three-columns"><h6>{{note.director.first_name}} {{note.director.last_name}}</h6></div>
+            <div class="six-columns">{{note.content}}</div>
+            <hr style="display: none;">
+          </div>
+         </div>
 
          <nav class="pagination add-bottom">
           <a class="page-numbers prev" v-on:click="swing('UP')">Starred</a>
           <a class="page-numbers next" v-on:click="swing('LEFT')">X</a>
           <a class="page-numbers next" v-on:click="swing('RIGHT')">Callback</a>
           <a class="page-numbers next" v-on:click="next()">Next</a>
-          <div>Swipe right to callback the actor, up to star them for future productions, and left to skip. Or, if you're not ready to make a call, click next.</div>
+          <div>Swipe right to callback the actor, up to star them for future productions, and left to skip. Or, if you're not ready to make a call, click next. Write any notes you may have below.</div>
+          <textarea class="live-textarea" v-model="note"></textarea>
           <div><button @click="callback()">Callback List</button></div>
          </nav>
        </div>
@@ -81,7 +89,9 @@
           minThrowOutDistance: 250,
           maxThrowOutDistance: 300
         },
-        auditionId: ""
+        auditionId: "",
+        notebook: [],
+        note: ""
       };
     },
     created: function() {
@@ -92,14 +102,16 @@
         this.show = response.data.show.name;
         this.auditionId = response.data.id;
         this.timeSlots = response.data.time_slots.filter(ts => ts.actor).reverse();
-        this.currentTimeSlot = this.timeSlots[0]
-        console.log(this.currentTimeSlot);
+        this.currentTimeSlot = this.timeSlots[this.timeSlots.length - 1];
+        this.notebook = this.currentTimeSlot.notes;
         this.loading = false;
       });
     },
     methods: {
       next: function() {
         this.timeSlots.pop();
+        this.currentTimeSlot = this.timeSlots[this.timeSlots.length - 1];
+        this.notebook = this.currentTimeSlot.notes;
       },
       sort: function(timeSlot, num) {
         var params = {sort: num};
@@ -115,6 +127,8 @@
           this.swing('RIGHT');
         } else if(e.key == "ArrowLeft") {
           this.swing('LEFT');
+        } else if(e.key == "Enter") {
+          this.addNote();
         }
       },
       swing (direction) {
@@ -137,10 +151,21 @@
           this.sort(timeSlot, 'none');
         }
 
-        setTimeout(() => this.timeSlots.splice(index, 1), 250);
+        setTimeout(() => this.next(), 250);
       },
       callback: function() {
         this.$router.push("/auditions/" + this.auditionId + "/callback");
+      },
+      addNote: function() {
+        var params = {notes: [this.note]}
+
+        axios.patch("/api/time_slots/" + this.currentTimeSlot.id, params)
+          .then(response => {
+            console.log(response.data);
+            this.notebook = response.data.notes
+          });
+
+        this.note = "";
       }
     }
   };

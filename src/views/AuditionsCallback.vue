@@ -50,32 +50,44 @@
 
         <div class="row">
 
-            <div class="three columns">
+            <div class="two columns">
                <h3 class="half-bottom">Name</h3>
             </div>
 
-            <div class="six columns">
+            <div class="three columns">
                <h3 class="half-bottom">Info</h3>
             </div>
 
             <div class="three columns">
                <h3 class="half-bottom">Sort</h3>
             </div>
+
+            <div class="four columns">
+               <h3 class="half-bottom">Notes</h3>
+            </div>
             <hr>
          </div>
 
          <div class="row" v-for="timeSlot in sortedSlots">
-          <div class="three columns">
+          <div class="two columns">
                <p>{{timeSlot.actor.first_name}} {{timeSlot.actor.last_name}}</p>
             </div>
 
-            <div class="six columns">
+            <div class="three columns">
                <div>Phone: {{ timeSlot.actor.phone }}</div>
                <div>Email: {{ timeSlot.actor.email }}</div>
                <div>Union Status: {{ timeSlot.actor.union_status }}</div>
             </div>
+
             <div class="three columns">
                <p>{{ timeSlot.sort }}</p>
+            </div>
+
+            <div class="four columns">
+               <div v-for="note in timeSlot.notes">
+                <h6>{{note.director.first_name}} {{note.director.last_name}}</h6>
+                <p>{{note.content}}</p>
+               </div>
             </div>
             <hr>
          </div>
