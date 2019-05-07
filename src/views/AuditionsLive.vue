@@ -10,7 +10,9 @@
 
             <p>{{ show }} </p>
          </div>
-
+         <div>
+            <a class="more-link" :href="'/auditions/' + this.$route.params.id"><i class="fa fa-arrow-circle-o-left"></i> Back</a>
+          </div>
       </div>
 
    </div>
@@ -55,7 +57,8 @@
           <a class="page-numbers next" v-on:click="swing('LEFT')">X</a>
           <a class="page-numbers next" v-on:click="swing('RIGHT')">Callback</a>
           <a class="page-numbers next" v-on:click="next()">Next</a>
-          <div>Swipe right to callback the actor, up to star them for future productions, and left to skip. Or, if you're not ready to make a call, click next. Write any notes you may have below.</div>
+          <div>Swipe right to callback the actor, up to star them for future productions, and left to skip. Or, if you're not ready to make a call, click next.</div>
+          <div>Write any notes you may have below. <b>Press Enter to send</b></div>
           <textarea class="live-textarea" v-model="note"></textarea>
           <div><button @click="callback()">Callback List</button></div>
          </nav>
