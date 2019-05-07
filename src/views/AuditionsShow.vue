@@ -132,10 +132,10 @@
 
          </section> <!-- end section -->
 
-         <ul class="post-nav cf">
+         <!-- <ul class="post-nav cf">
            <li class="prev"><a href="#" rel="prev"><strong>Previous Entry</strong> Duis Sed Odio Sit Amet Nibh Vulputate</a></li>
            <li class="next"><a href="#" rel="next"><strong>Next Entry</strong> Morbi Elit Consequat Ipsum</a></li>
-         </ul>
+         </ul> -->
 
       </div>
 
