@@ -19,10 +19,14 @@
 
         <div class="twelve columns" style="padding-top: 24px;">
 
-           <h1 class="title-heading">{{title}}</h1>
+           <a :href="'/auditions/' + this.$route.params.id" class="title-heading">{{title}}</a>
 
            <p class="lead add-bottom">{{show}}
            </p>
+
+           <div>
+            <a class="more-link" :href="'/auditions/' + this.$route.params.id + '/live'"><i class="fa fa-arrow-circle-o-left"></i> Live View</a>
+          </div>
 
         </div>
 
