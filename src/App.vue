@@ -57,9 +57,9 @@
                    <li><router-link to="/auditions">Auditions</router-link>
                     </li>
                     <li><router-link to="/shows">Shows</router-link></li>
-                    <li v-if="!isLoggedIn"><router-link v-on:click="loggedInToggle()" to="/login">Login</router-link></li>
-                    <li v-if="isLoggedIn" v-on:click="loggedInToggle()"><router-link to="/logout">Logout</router-link></li>
-                    <li v-if="!isLoggedIn" v-on:click="loggedInToggle()"><router-link to="/signup">Signup</router-link></li>
+                    <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
+                    <li v-if="isLoggedIn"><router-link to="/logout">Logout</router-link></li>
+                    <li><router-link to="/signup">Signup</router-link></li>
          </ul>
 
             <ul class="footer-social">
@@ -72,7 +72,6 @@
             </ul>
 
             <ul class="copyright">
-               <li>Copyright &copy; 2014 Sparrow</li>
                <li>Design by <a title="Styleshout" href="http://www.styleshout.com/">Styleshout</a></li>
             </ul>
 
@@ -105,9 +104,6 @@
     });
   },
   methods: {
-    logInToggle: function() {
-      this.isLoggedIn = !!localStorage.getItem("jwt");
-    }
   }
 };
 </script>
