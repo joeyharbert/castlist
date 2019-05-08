@@ -44,8 +44,8 @@
 
                   <ul class="portfolio-meta-list">
                    <li><span>Date: </span>{{ audition.start_time.toLocaleDateString()}}</li>
-                   <li><span>Start Time: </span>{{ audition.start_time.toTimeString().substring(0, 5)}}</li>
-                   <li><span>End Time: </span>{{ audition.end_time.toTimeString().substring(0, 5) }}</li>
+                   <li><span>Start Time: </span>{{correctTime(audition.start_time)}}</li>
+                   <li><span>End Time: </span>{{ correctTime(audition.end_time) }}</li>
                    <li><a v-on:click="editAudition(audition)" v-if="isDirector">Edit Audition</a></li>
                    <li><a v-on:click="destroyAudition(audition)" v-if="isDirector">Delete Audition</a></li>
                    <li><a v-on:click="callback(audition)" v-if="isDirector">Callback List</a></li>
@@ -74,8 +74,8 @@
 
                        <div class="three columns post-meta end">
                           <time datetime="2014-01-31" class="post-date" pubdate="">{{ new Date(timeSlot.start_time).toLocaleDateString()}}</time>
-                          <span class="dauthor">Start: {{ new Date(timeSlot.start_time).toTimeString().substring(0, 5) }}</span>
-                          <span class="dauthor">End: {{ new Date(timeSlot.end_time).toTimeString().substring(0, 5) }}</span>
+                          <span class="dauthor">Start: {{ correctTime(new Date(timeSlot.start_time)) }}</span>
+                          <span class="dauthor">End: {{ correctTime(new Date(timeSlot.end_time)) }}</span>
                        </div>
 
                     </div>
@@ -278,6 +278,13 @@ export default {
     },
     callback: function(audition) {
       this.$router.push("/auditions/" + audition.id + "/callback");
+    },
+    correctTime: function(date) {
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var pm = hours > 12 ? true : false;
+      if(pm) {hours -= 12}
+      return hours.toString() + ":" + minutes.toString() + (pm ? " PM" : " AM");
     }
   }
 };
