@@ -85,7 +85,8 @@
                           <div>Phone: {{ timeSlot.actor.phone }}</div>
                           <div>Email: {{ timeSlot.actor.email }}</div>
                           <div>Union Status: {{ timeSlot.actor.union_status }}</div>
-                          <div><a v-if="timeSlot.actor && isDirector" class="more-link pull-left" v-on:click="toggleTimeSlotEdit(timeSlot)">Edit Slot</a></div>
+                          <div><a v-if="timeSlot.actor && isDirector" class="more-link pull-left" v-on:click="toggleTimeSlotEdit(timeSlot)">Edit Slot</a>
+                          </div>
                         </div>
                         <div class="actor-edit" v-if="(currentTimeSlot === timeSlot) && isDirector">
 
@@ -118,7 +119,8 @@
                             </form>
                         </div>
                         <a v-if="(!timeSlot.actor && !isDirector) && currentTimeSlot !== timeSlot" class="more-link pull-right" v-on:click="toggleTimeSlotEdit(timeSlot)">Sign Up!<i class="fa fa-arrow-circle-o-right"></i></a>
-                        <a v-if="(!timeSlot.actor && !isDirector) && currentTimeSlot === timeSlot" class="more-link pull-right" v-on:click="signUp(timeSlot)">Submit<i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a v-if="timeSlot.actor && timeSlot.actor.id === currentUserID && currentTimeSlot !== timeSlot" class="more-link pull-left" v-on:click="toggleTimeSlotEdit(timeSlot)">Edit Slot</a>
+                        <a v-if="!isDirector && currentTimeSlot === timeSlot" class="more-link pull-right" v-on:click="signUp(timeSlot)">Submit<i class="fa fa-arrow-circle-o-right"></i></a>
                         <a v-if="(timeSlot.actor && isDirector) && currentActor !== timeSlot.actor" class="more-link pull-right" v-on:click="toggleActorInfo(timeSlot.actor)">More Info<i class="fa fa-arrow-circle-o-right"></i></a>
                         <a v-if="(timeSlot.actor && isDirector) && currentActor === timeSlot.actor" class="more-link pull-right" v-on:click="toggleActorInfo(timeSlot.actor)">Less Info<i class="fa fa-arrow-circle-o-left"></i></a>
                     </div>
@@ -157,7 +159,8 @@ export default {
       currentActor: {},
       currentTimeSlot: {},
       actors: [],
-      headshot: ''
+      headshot: '',
+      currentUserID: 0,
     };
   },
   created: function() {
@@ -170,6 +173,9 @@ export default {
       this.isDirector = !!(this.audition.directors[0].phone);
       axios.get("/api/users/").then(response => {
           this.actors = response.data.filter(user => user.type === "Actor")
+          axios.get("/api/users/current").then(response => {
+              this.currentUserID = response.data.id;
+          });
           this.loading = false;
         });
     });

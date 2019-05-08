@@ -17,20 +17,24 @@
 
                  <ul id="nav" class="nav">
 
-                   <li class="current"><router-link to="/">Home</router-link></li>
-                   <li><span><router-link to="/auditions">Auditions</router-link></span>
-                       <ul>
-                          <li><router-link to="/auditions/new">Auditions New</router-link></li>
+                   <li><router-link to="/">Home</router-link></li>
+                   <li><router-link to="/auditions">Auditions</router-link>
+                       <ul v-if="isDirector">
+                          <li><router-link to="/auditions/new">New Audition</router-link></li>
                        </ul>
                     </li>
-                    <li><span><router-link to="/login">User</router-link></span>
+                    <li><router-link to="/login">User</router-link>
                        <ul>
                           <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
                           <li v-if="isLoggedIn"><router-link to="/logout">Logout</router-link></li>
                           <li v-if="!isLoggedIn"><router-link to="/signup">Signup</router-link></li>
                        </ul>
                     </li>
-                    <li><router-link to="/shows">Shows</router-link></li>
+                    <li><router-link to="/shows">Shows</router-link>
+                      <ul v-if="isDirector">
+                          <li><router-link to="/shows/new">New Show</router-link></li>
+                       </ul>
+                    </li>
                  </ul> <!-- end #nav -->
 
               </nav> <!-- end #nav-wrap -->
@@ -84,14 +88,21 @@
 
 
 <script>
+  import axios from "axios"
   export default {
   data: function() {
     return {
-      isLoggedIn: false
+      isLoggedIn: false,
+      isDirector: false
     }; 
   },
   created: function() {
     this.isLoggedIn = !!localStorage.getItem("jwt");
+    axios.get("/api/users/current").then(response => {
+        if(response.data.type === "Director") {
+          this.isDirector = true;
+        }
+    });
   },
   methods: {
     logInToggle: function() {

@@ -19,7 +19,19 @@
 
       <div class="content-outer">
 
-      <div id="page-content" class="live">
+       <div class="ten columns centered text-center" v-if="message">
+            <h1>Unauthorized<span>.</span></h1>
+            <p>{{ message }}</p>
+       </div>
+
+        <div class="ten columns centered text-center" v-if="(timeSlots.length <= 0) && !message">
+            <h1>No Actors<span>.</span></h1>
+
+            <p>Please return when more time slots are filled. </p>
+            <div>Or check out the: <button @click="callbackList()">Callback List</button></div>
+        </div>
+
+      <div id="page-content" class="live" v-if="timeSlots.length > 0">
 
         <!-- Background placeholder images to make space -->
          <div class="row add-bottom">
@@ -71,7 +83,7 @@
           <div>Swipe right to callback the actor, up to star them for future productions, and left to skip. Or, if you're not ready to make a call, click next.</div>
           <div>Write any notes you may have below. <b>Press Enter to send</b></div>
           <textarea class="live-textarea" v-model="note"></textarea>
-          <div><button @click="callback()">Callback List</button></div>
+          <div><button @click="callbackList()">Callback List</button></div>
          </nav>
        </div>
      </div>
@@ -87,7 +99,7 @@
   export default {
     data: function() {
       return {
-        message: "L I V E",
+        message: "",
         timeSlots: [],
         currentTimeSlot: {},
         index: 0,
@@ -114,13 +126,20 @@
     created: function() {
       this.loading = true;
       window.addEventListener('keyup', this.keypress);
-      axios.get("/api/auditions/" + this.$route.params.id).then(response => {
-        this.title = response.data.name;
-        this.show = response.data.show.name;
-        this.auditionId = response.data.id;
-        this.timeSlots = response.data.time_slots.filter(ts => ts.actor).reverse();
-        this.currentTimeSlot = this.timeSlots[this.timeSlots.length - 1];
-        this.notebook = this.currentTimeSlot.notes;
+      axios.get("/api/auditions/" + this.$route.params.id).then(response => { 
+        if(response.data.directors[0].phone) {
+          this.title = response.data.name;
+          this.show = response.data.show.name;
+          this.auditionId = response.data.id;
+          this.timeSlots = response.data.time_slots.filter(ts => ts.actor).reverse();
+          this.currentTimeSlot = this.timeSlots[this.timeSlots.length - 1];
+          if(this.currentTimeSlot) {this.notebook = this.currentTimeSlot.notes;} 
+        } else {
+          this.title = response.data.name;
+          this.show = response.data.show.name;
+          this.auditionId = response.data.id;
+          this.message = "Please log into the proper director account to see this data."
+        }
         this.loading = false;
       });
     },
@@ -176,7 +195,7 @@
 
         setTimeout(() => this.next(), 450);
       },
-      callback: function() {
+      callbackList: function() {
         this.$router.push("/auditions/" + this.auditionId + "/callback");
       },
       addNote: function() {

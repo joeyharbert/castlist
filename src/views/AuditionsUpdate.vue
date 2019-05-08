@@ -5,7 +5,12 @@
 
          <div id="primary" class="eight columns">
 
-            <section>
+            <div class="ten columns centered text-center" v-if="message">
+                <h1>Unauthorized<span>.</span></h1>
+                <p>{{ message }}</p>
+           </div>
+
+            <section v-if="!message">
 
               <h1>Editing {{ audition.name }}</h1>
 
@@ -98,24 +103,29 @@ export default {
       errors: [],
       loading: false,
       startTime: "",
-      endTime: ""
+      endTime: "",
+      message: ""
     };
   },
   created: function() {
     this.loading = true;
     axios.get("/api/auditions/" + this.$route.params.id).then(response => {
-      this.audition = response.data;
-      this.audition.start_time = new Date(this.audition.start_time);
-      this.audition.end_time = new Date(this.audition.end_time);
-      this.startTime = this.audition.start_time.toJSON()
-      this.endTime = this.audition.end_time.toJSON();
+        if(response.data.directors[0].phone) {
+        this.audition = response.data;
+        this.audition.start_time = new Date(this.audition.start_time);
+        this.audition.end_time = new Date(this.audition.end_time);
+        this.startTime = this.audition.start_time.toJSON()
+        this.endTime = this.audition.end_time.toJSON();
 
-      axios.get("/api/shows/").then(response => {
-      this.shows = response.data;
-      });
-      axios.get("/api/companies/").then(response => {
-        this.companies = response.data;
-      });
+        axios.get("/api/shows/").then(response => {
+        this.shows = response.data;
+        });
+        axios.get("/api/companies/").then(response => {
+          this.companies = response.data;
+        });
+      } else {
+          this.message = "Please log into the proper director account to see this data."
+        }
       this.loading = false;
     });
   },

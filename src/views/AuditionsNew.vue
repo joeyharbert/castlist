@@ -16,9 +16,14 @@
 
       <div id="page-content" class="row page">
 
+        <div class="ten columns centered text-center" v-if="!isDirector">
+          <h1>Unauthorized<span>.</span></h1>
+          <p>{{ message }}</p>
+        </div>
+
          <div id="primary" class="eight columns">
 
-            <section>
+            <section v-if="isDirector">
 
               <h1>Create an Audition Day</h1>
 
@@ -109,6 +114,7 @@
 export default {
   data: function() {
     return {
+      isDirector: false,
       newName: "",
       newRequirements: "",
       newTimeSlotLength: "",
@@ -119,17 +125,23 @@ export default {
       companies: [],
       shows: [],
       errors: [],
-      loading: false
+      loading: false,
+      message: "Please log into the proper director account to see this data."
     };
   },
   created: function() {
     this.loading = true;
     axios.get("/api/shows/").then(response => {
       this.shows = response.data;
-    })
+    });
     axios.get("/api/companies/").then(response => {
       this.companies = response.data;
-    })
+    });
+    axios.get("/api/users/current").then(response => {
+        if(response.data.type === "Director") {
+          this.isDirector = true;
+        }
+    });
     this.loading = false;
   },
   methods: {
